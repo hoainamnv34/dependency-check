@@ -1,0 +1,26 @@
+name: 'Dependency Check'
+description: 'Dependency Check Github action'
+inputs:
+    project:
+        description: 'The name of the project being scanned.'
+        required: true
+        default: 'dependency check project'
+    path:
+        required: true 
+        description: 'The path to scan'
+    format:
+        required: true
+        description: ' The report format (HTML, XML, CSV, JSON, JUNIT, SARIF, JENKINS, GITLAB or ALL). parameters can be specified.'
+        default: 'HTML'
+runs:
+    using: 'docker'
+    image: 'docker://owasp/dependency-check-action:latest'
+    args:
+        - '--project'
+        - '${{ inputs.project }}'
+        - '--scan'
+        - '${{ inputs.path }}'
+        - '--format'
+        - '${{ inputs.format }}'
+        - '--out'
+        - '/github/workspace/reports'
